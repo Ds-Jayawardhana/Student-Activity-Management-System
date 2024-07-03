@@ -1,4 +1,7 @@
 
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Main {
@@ -49,6 +52,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Store students");
+                    store_students(students);
 
                     break;
                 case 6:
@@ -106,12 +110,12 @@ public class Main {
                 boolean included = false;
                 for (int l = 0; l < students.length && !included; l++) {
                     for (int j = 0; j < students[l].length; j++) {
-                    if (students[l][j] == null) {
-                        students[0][j] = Student_ID;
-                        students[1][j] = Student_Name;
-                        included = true;
+                        if (students[l][j] == null) {
+                            students[0][j] = Student_ID;
+                            students[1][j] = Student_Name;
+                            included = true;
 
-                    }
+                        }
 
                     }
                 }
@@ -129,12 +133,38 @@ public class Main {
                     System.out.println("Name:-"+students[0][j]);
                     System.out.println("Student Id:-"+students[1][j]);
                     break;
-                } else  {
-                    continue;
                 }
+            }
 
-            }
+        }
+    }
+    private static void store_students(String students[][]){
+        try{
+            File file=new File("std_dtls.txt");
+
+            boolean file_created=file.createNewFile();
+            if(file_created){
+                System.out.println("File Created"+file.getName());
+
+            }else{
+                if(file.exists()) {
+                    System.out.println("File Already Exsisting");
+                }else{
+                    System.out.println("There is an error When Creating the"+file.getName()+"File");
                 }
             }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        try (FileWriter fileWriter = new FileWriter("std_dtls.txt")) {
+            for (int j = 0; j < students[0].length; j++) {
+                    fileWriter.write(students[0][j] + "," + students[1][j] + "\n");
+            }
+
+        }catch (IOException e){
+            System.out.println(students);
+            e.printStackTrace();
+        }
 
     }
+}
