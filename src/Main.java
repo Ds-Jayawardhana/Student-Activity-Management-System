@@ -1,4 +1,4 @@
-import java.rmi.UnexpectedException;
+
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +23,7 @@ public class Main {
         String[][] students = new String[2][100];
 
         try {
-            System.out.println("Enter an option to execute:");
+            System.out.print("Enter an option to execute:");
             int option = scan.nextInt();
             switch (option) {
                 case 1:
@@ -32,15 +32,19 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Register student (with ID)");
-
-
+                    register(students, scan);
                     break;
+
+
                 case 3:
                     System.out.println("Delete Students");
+
+
 
                     break;
                 case 4:
                     System.out.println("Find Student");
+                    find_student(students,scan);
 
                     break;
                 case 5:
@@ -68,43 +72,69 @@ public class Main {
     }
 
     private static void check_Seats(String[][] students) {
-        int count=0;
+        int count = 0;
         for (int l = 0; l < students.length; l++) {
             for (int j = 0; j < students[l].length; j++) {
-                if(students[l][j] == null){
-                    count=count+1;
-
+                if (students[l][j] == null) {
+                    count = count + 1;
                 }
-                /**
-                System.out.println("seat"+" "+(j+1)+" Status: " + (students[l][j] == null?  "Available" : "Occupied"));**/
+
 
             }
-
-
-
+        }
+        System.out.println("The Number of Seats Available is" + " " + (count / 2));
     }
-        System.out.println("The Number of Seats Available is"+" "+(count/2));
+
     private static void register(String[][] students, Scanner scan) {
-           int availableSeats=0;
-            for (int l = 0; l < students.length; l++) {
-                for (int j = 0; j < students[l].length; j++) {
-                    if(students[l][j] == null){
-                        availableSeats++;
+        int availableSeats = 0;
+        for (int l = 0; l < students.length; l++) {
+            for (int j = 0; j < students[l].length; j++) {
+                if (students[l][j] == null) {
+                    availableSeats++;
+                }
+            }
+        }
+        if (availableSeats < 1) {
+            System.out.print("Sorry there are no Seats Available");
+        } else {
+            String answer="yes";
+            while(!answer.equals("no")){
+                System.out.println("Enter the Student ID Number");
+                String Student_ID = scan.next();
+                System.out.println("Enter the name of the Student");
+                String Student_Name = scan.next();
+                boolean included = false;
+                for (int l = 0; l < students.length && !included; l++) {
+                    for (int j = 0; j < students[l].length; j++) {
+                    if (students[l][j] == null) {
+                        students[0][j] = Student_ID;
+                        students[1][j] = Student_Name;
+                        included = true;
 
                     }
-                if(availableSeats<1){
-                    System.out.print("Sorry there is no Seats Available");
-                }else{
-                    System.out.println("Enter the Student ID Number");
-                    String Student_ID= scan.next();
-                    System.out.println("Enter the name of the Student");
-                    String Student_Name=Scan.next();
 
-
-
+                    }
+                }
+                System.out.println("Do you want to add more student Details");
+                answer = scan.next().toLowerCase();
+            }
+        }
+    }
+    private static void find_student(String students[][], Scanner scan){
+        System.out.println("Enter the student Id");
+        String stud_Id= scan.next();
+        for (int l = 0; l < students.length; l++) {
+            for (int j = 0; j < students[l].length; j++) {
+                if (students[0][j].equals(stud_Id)) {
+                    System.out.println("Name:-"+students[0][j]);
+                    System.out.println("Student Id:-"+students[1][j]);
+                    break;
+                } else  {
+                    continue;
                 }
 
+            }
+                }
+            }
 
-}
-}
-}
+    }
