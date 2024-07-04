@@ -1,8 +1,6 @@
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -30,40 +28,37 @@ public class Main {
         while (true) {
             System.out.println(prn_op);
             System.out.print("Enter an option to execute: ");
-            int option = scan.nextInt();
+            String option = scan.next();
             scan.nextLine(); // Consume newline
 
             switch (option) {
-                case 1:
+                case "1":
                     System.out.println("Check available seats");
                     check_Seats(students);
                     break;
-                case 2:
+                case "2":
                     System.out.println("Register student (with ID)");
                     register(students, scan);
                     break;
-                case 3:
+                case "3":
                     System.out.println("Delete Student");
                     break;
-                case 4:
+                case "4":
                     System.out.println("Find Student");
                     find_student(students, scan);
                     break;
-                case 5:
+                case "5":
                     System.out.println("Store students");
                     store_students(students);
                     break;
-                case 6:
+                case "6":
                     System.out.println("Load Students");
                     load_file(students);
-
-
                     break;
-                case 7:
+                case "7":
                     System.out.println("View the student by name");
-
                     break;
-                case 0:
+                case "0":
                     System.out.println("Exiting...");
                     return;
                 default:
@@ -126,17 +121,24 @@ public class Main {
     }
 
     private static void find_student(String students[][], Scanner scan) {
-        System.out.println("Enter the student Id");
-        String stud_Id = scan.next();
+        System.out.print("Enter the student Id:-");
+        String stud_Id = scan.next().toLowerCase();
+        try{
         for (int l = 0; l < students.length; l++) {
             for (int j = 0; j < students[l].length; j++) {
-                if (students[0][j].equals(stud_Id)) {
-                    System.out.println("Student Id:-" + students[0][j]);
-                    System.out.println("Name:-" + students[1][j]);
-                    break;
+                
+                    if (students[0][j].equals(stud_Id)) {
+                        System.out.println("Student Id:-" + students[0][j]);
+                        System.out.println("Name:-" + students[1][j]);
+                        return;
+                    }
+
                 }
+                
             }
 
+        }catch(NullPointerException e){
+            System.out.println("Student Not Found,Please try again");
         }
     }
 
@@ -161,7 +163,10 @@ public class Main {
         try (FileWriter fileWriter = new FileWriter("std_dtls.txt")) {
             for (int l = 0; l < students.length; l++) {
                 for (int j = 0; j < students[l].length; j++) {
-                    fileWriter.write(students[0][j] + "," + students[1][j] + "\n");
+                    if (students[l][j] != null) {
+                        fileWriter.write(students[0][j] + "," + students[1][j] + "\n");
+                        return;
+                    }
                 }
             }
 
