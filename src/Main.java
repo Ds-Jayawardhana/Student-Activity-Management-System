@@ -33,36 +33,46 @@ public class Main {
 
             switch (option) {
                 case "1":
-                    System.out.println("Check available seats");
+                    System.out.println("----------------Check available seats--------------------");
+                    System.out.println();
                     check_Seats(students);
                     break;
                 case "2":
-                    System.out.println("Register student (with ID)");
+                    System.out.println("-----------------Register student (with ID)----------------");
+                    System.out.println();
                     register(students, scan);
                     break;
                 case "3":
-                    System.out.println("Delete Student");
+                    System.out.println("----------------------Delete Student------------------------");
+                    System.out.println();
+                    /**delete_std();**/
                     break;
                 case "4":
-                    System.out.println("Find Student");
+                    System.out.println("-----------------------Find Student--------------------------");
+                    System.out.println();
                     find_student(students, scan);
                     break;
                 case "5":
-                    System.out.println("Store students");
+                    System.out.println("------------------------Store students-------------------------");
+                    System.out.println();
                     store_students(students);
                     break;
                 case "6":
-                    System.out.println("Load Students");
+                    System.out.println("--------------------------Load Students-------------------------");
+                    System.out.println();
                     load_file(students);
                     break;
                 case "7":
-                    System.out.println("View the student by name");
+                    System.out.println("------------------------View the student by name------------------");
+                    System.out.println();
+                    stud_sort(students);
                     break;
                 case "0":
                     System.out.println("Exiting...");
                     return;
                 default:
-                    System.out.println("Invalid option");
+                    System.out.println("------------------------------Invalid option-------------------------");
+                    System.out.println();
                     break;
             }
         }
@@ -94,6 +104,7 @@ public class Main {
         }
         if (availableSeats < 1) {
             System.out.print("Sorry there are no Seats Available");
+            
         } else {
             String answer = "yes";
             while (!answer.equals("no")) {
@@ -114,8 +125,12 @@ public class Main {
 
                     }
                 }
-                System.out.println("Do you want to add more student Details");
+                System.out.println("Do you want to add more student Details(yes/no)");
                 answer = scan.next().toLowerCase();
+                while (!answer.equals("yes") && !answer.equals("no")) {
+                    System.out.println("Please enter only 'yes' or 'no':");
+                    answer = scan.next().toLowerCase();
+                }
             }
         }
     }
@@ -126,15 +141,18 @@ public class Main {
         try{
         for (int l = 0; l < students.length; l++) {
             for (int j = 0; j < students[l].length; j++) {
-                
+
                     if (students[0][j].equals(stud_Id)) {
+                        System.out.println("-----------------------------");
                         System.out.println("Student Id:-" + students[0][j]);
                         System.out.println("Name:-" + students[1][j]);
+                        System.out.println("-----------------------------");
+                        System.out.println();
                         return;
                     }
 
                 }
-                
+
             }
 
         }catch(NullPointerException e){
@@ -161,14 +179,14 @@ public class Main {
             e.printStackTrace();
         }
         try (FileWriter fileWriter = new FileWriter("std_dtls.txt")) {
-            for (int l = 0; l < students.length; l++) {
-                for (int j = 0; j < students[l].length; j++) {
-                    if (students[l][j] != null) {
+
+                for (int j = 0; j < students[0].length; j++) {
+                    if (students[0][j] != null) {
                         fileWriter.write(students[0][j] + "," + students[1][j] + "\n");
-                        return;
+                        System.out.println("Succesfuly Data Saved");
+
                     }
                 }
-            }
 
         } catch (IOException e) {
             System.out.println(students);
@@ -211,5 +229,47 @@ public class Main {
         }
 
     }
-}
+    private static void stud_sort(String students[][]) {
+        int count = 0;
+
+        for (int l = 0; l < students[0].length; l++) {
+            if (students[0][l] != null) count++;
+            else {
+                System.out.println("There is no Any Student Details");
+                break;
+            }
+        }
+
+
+
+        for (int l = 0; l < count - 1; l++) {
+            for (int j = 0; j < count - 1 - l; j++) {
+                if (students[1][j].compareToIgnoreCase(students[1][j + 1]) > 0) {
+
+                    String tempName = students[1][j];
+                    students[1][j] = students[1][j + 1];
+                    students[1][j + 1] = tempName;
+
+
+                    String tempId = students[0][j];
+                    students[0][j] = students[0][j + 1];
+                    students[0][j + 1] = tempId;
+                }
+            }
+        }
+
+
+        System.out.println("------------------------");
+        for (int i = 0; i < count; i++) {
+            System.out.println("Student Name: " + students[1][i]);
+            System.out.println("Student ID: " + students[0][i]);
+            System.out.println("------------------------");
+        }
+    }
+
+    }
+
+
+
+
 
