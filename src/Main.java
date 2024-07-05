@@ -45,7 +45,7 @@ public class Main {
                 case "3":
                     System.out.println("----------------------Delete Student------------------------");
                     System.out.println();
-                    /**delete_std();**/
+                    dlt_students(students,scan);
                     break;
                 case "4":
                     System.out.println("-----------------------Find Student--------------------------");
@@ -110,18 +110,32 @@ public class Main {
             while (!answer.equals("no")) {
                 System.out.println("Enter the Student ID Number");
                 String Student_ID = scan.next();
-                System.out.println("Enter the name of the Student");
-                String Student_Name = scan.next();
-                boolean included = false;
-                for (int l = 0; l < students.length && !included; l++) {
-                    for (int j = 0; j < students[l].length; j++) {
-                        if (students[l][j] == null) {
-                            students[0][j] = Student_ID;
-                            students[1][j] = Student_Name;
-                            included = true;
-                            break;
+                boolean alreadyexsist=false;
+                for(int i=0;i<students[0].length;i++){
 
-                        }
+                    if(students[0][i]!=null && students[0][i].equals(Student_ID)){
+                        alreadyexsist=true;
+                    }
+                }
+
+                    if(alreadyexsist){
+                        System.out.println("Student Already Exsisting");
+
+                    }else{
+                        System.out.println("Enter the name of the Student");
+                        String Student_Name = scan.next();
+                        boolean included = false;
+                        for (int l = 0; l < students.length && !included; l++) {
+                            for (int j = 0; j < students[l].length; j++) {
+                                if (students[l][j] == null) {
+                                    students[0][j] = Student_ID;
+                                    students[1][j] = Student_Name;
+                                    included = true;
+                                    break;
+
+                                }
+
+                            }
 
                     }
                 }
@@ -266,9 +280,25 @@ public class Main {
             System.out.println("------------------------");
         }
     }
+    private static void dlt_students(String students[][], Scanner scan){
+        System.out.println("Enter the the student Id to Delete");
+        String stud_Id = scan.next().toLowerCase();
+        for(int l=0;l<students[0].length;l++){
+            if(students[0][l]!=null && students[0][l].equals(stud_Id)){
+                students[0][l]=null;
+                students[1][l]=null;
+                System.out.println("Students details with "+ stud_Id+"Deleted");
+                System.out.println();
+                return;
+            }
+
+            }
+        System.out.println("Student Not Found Try again");
+        System.out.println();
+
+        }
 
     }
-
 
 
 
