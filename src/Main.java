@@ -328,6 +328,7 @@ public class Main {
         System.out.println("Enter the the student Id to Delete");
         String stud_Id = scan.next().toLowerCase();//conveing the user enterd thee string tto lowercase
         for(int l=0;l<students[0].length;l++){//iterating throught the 0 th data row
+
             //If condition chceks if there is any data and user entered is exsisting to replace with null(delete data)
             if(students[0][l]!=null && students[0][l].equals(stud_Id)){
                 students[0][l]=null;
@@ -338,6 +339,8 @@ public class Main {
             }
 
             }
+        //if there is no any student details Programme details user to there is no student details found  
+          
         System.out.println("Student Not Found Try again");
         System.out.println();
 
